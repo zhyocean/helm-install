@@ -1,0 +1,17 @@
+# Logs and temporary files
+*.log
+*.swp
+*.swo
+*~
+tmp/
+temp/
+
+# IDE and editor files
+.vscode/
+.idea/
+*.iml
+.project
+.settings/
+
+# Go (if any)
+vendor/

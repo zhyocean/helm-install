@@ -1,0 +1,18 @@
+apiVersion: v1
+kind: Service
+metadata:
+  name: kruise-manager-metrics-service
+  namespace: kruise-system
+  labels:
+    app.kubernetes.io/name: kruise-manager
+    app.kubernetes.io/component: metrics
+    app.kubernetes.io/instance: kruise
+spec:
+  type: ClusterIP # 这是默认类型，仅在集群内部可访问
+  selector:
+    control-plane: controller-manager
+  ports:
+  - name: metrics
+    port: 8080 # Service 对外暴露的端口
+    targetPort: 8080 # Pod 内部监听的端口（就是 manager.metrics.port 的值）
+    protocol: TCP
