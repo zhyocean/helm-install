@@ -15,3 +15,4 @@ temp/
 
 # Go (if any)
 vendor/
+.DS_Store
