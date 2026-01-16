@@ -6,6 +6,7 @@
 
 ```
 helm-install/
+├── acs-server/         # 自定义 ACS Server 服务
 ├── gpu-operator/        # NVIDIA GPU Operator
 ├── kruise/            # OpenKruise 扩展套件
 ├── kube-prometheus/   # Prometheus 监控栈
@@ -15,7 +16,23 @@ helm-install/
 
 ## 组件说明
 
-### 1. Kube-Prometheus
+### 1. ACS Server
+自定义 ACS Server 控制器，用于集群管理和控制。
+
+**版本**: v1 (Chart: 0.0.1)
+
+**主要特性**:
+- 集群模式支持
+- 容忍 Master 节点污点
+- 默认单副本部署
+
+**部署**:
+```bash
+cd acs-server
+helm install acs-server . -n acs-system --create-namespace
+```
+
+### 2. Kube-Prometheus
 Kubernetes 监控栈，包含 Prometheus、Grafana、Alertmanager 等组件。
 
 **版本**: v0.85.0
@@ -39,7 +56,7 @@ kubectl apply -f manifests/
 ./images-load.sh
 ```
 
-### 2. GPU Operator
+### 3. GPU Operator
 NVIDIA GPU Operator，用于在 Kubernetes 集群中自动部署和管理 GPU 资源。
 
 **可用版本**:
@@ -52,7 +69,7 @@ cd gpu-operator/v24.3.0
 helm install gpu-operator . -n gpu-operator --create-namespace
 ```
 
-### 3. Kruise
+### 4. Kruise
 OpenKruise 是 Kubernetes 的扩展套件，提供高级工作负载管理能力。
 
 **可用版本**:
@@ -66,7 +83,7 @@ cd kruise
 ./start.sh
 ```
 
-### 4. Volcano
+### 5. Volcano
 Kubernetes 批量作业调度器，专为高性能计算、AI/ML 等场景设计。
 
 **版本**: v1.13.0
@@ -92,26 +109,32 @@ helm install volcano . -n volcano-system --create-namespace
    cd helm-install
    ```
 
-2. **部署监控栈**:
+2. **部署 ACS Server**:
+   ```bash
+   cd acs-server
+   helm install acs-server . -n acs-system --create-namespace
+   ```
+
+3. **部署监控栈**:
    ```bash
    cd kube-prometheus
    ./build.sh example.jsonnet
    kubectl apply -f manifests/
    ```
 
-3. **部署 GPU Operator (如需使用 GPU)**:
+4. **部署 GPU Operator (如需使用 GPU)**:
    ```bash
    cd gpu-operator/v25.10.1
    helm install gpu-operator . -n gpu-operator --create-namespace
    ```
 
-4. **部署 Kruise**:
+5. **部署 Kruise**:
    ```bash
    cd kruise
    ./start.sh
    ```
 
-5. **部署 Volcano**:
+6. **部署 Volcano**:
    ```bash
    cd volcano/v1.13.0
    helm install volcano . -n volcano-system --create-namespace
